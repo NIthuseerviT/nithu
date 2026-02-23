@@ -8,6 +8,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -312,48 +313,59 @@ margin-top:30px;
 </div>
 </section>
 
+<!-- FEEDBACK -->
 <section id="feedback">
-<h2>Feedback</h2>
+<div class="container card">
+<h2 class="section-title">Feedback</h2>
+
 <form class="feedback-form" id="feedbackForm">
 <input type="text" id="name" placeholder="Your Name" required>
 <input type="email" id="email" placeholder="Your Email" required>
 <textarea rows="4" id="message" placeholder="Your Feedback" required></textarea>
 <button type="submit">Submit Feedback</button>
-<div class="feedback-status" id="status"></div>
 </form>
+
+<div class="feedback-status" id="status"></div>
+</div>
 </section>
 
-<footer>
-© 2026 Nithu Seervi T | Portfolio
+<footer style="text-align:center;padding:20px;color:var(--muted)">
+© 2026 Ankit Biyani
 </footer>
 
 <script>
-const supabaseClient = supabase.createClient(
-"https://wvhzpiiotjyfikeuyveq.supabase.co",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2aHpwaWlvdGp5ZmlrZXV5dmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MzIwODcsImV4cCI6MjA4NzQwODA4N30.PXyAEIbSmXJ9cDeQiu6xuow5CLU6Xu1OUFcwA-els6E"
-);
+/* 🔗 SUPABASE CONFIG */
+const supabaseUrl = "https://wvhzpiiotjyfikeuyveq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2aHpwaWlvdGp5ZmlrZXV5dmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MzIwODcsImV4cCI6MjA4NzQwODA4N30.PXyAEIbSmXJ9cDeQiu6xuow5CLU6Xu1OUFcwA-els6E";
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-document.getElementById("feedbackForm").addEventListener("submit", async(e)=>{
+/* 📨 FEEDBACK SUBMIT */
+document.getElementById("feedbackForm").addEventListener("submit", async (e) => {
 e.preventDefault();
-const status=document.getElementById("status");
-status.innerText="Submitting...";
 
-const name=name.value;
-const email=email.value;
-const message=message.value;
+const status = document.getElementById("status");
+status.innerText = "Submitting...";
 
-const {error}=await supabaseClient.from("feedbacks").insert([{name,email,message}]);
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const message = document.getElementById("message").value;
 
-if(error){
-status.innerText="❌ Error submitting";
-status.style.color="red";
-}else{
-status.innerText="✅ Feedback submitted!";
-status.style.color="#00d4ff";
+const { error } = await supabaseClient
+.from("feedbacks")
+.insert([{ name, email, message }]);
+
+if (error) {
+status.innerText = "❌ Error submitting feedback";
+status.style.color = "red";
+} else {
+status.innerText = "✅ Feedback submitted successfully!";
+status.style.color = "#00d4ff";
 e.target.reset();
-}
-});
+}});
+</script>
 
+</body>
+</html>
 /* POPUP */
 function openPopup(el){
 document.getElementById("popup").style.display="flex";
@@ -379,3 +391,4 @@ bg.appendChild(b);
 
 </body>
 </html>
+
