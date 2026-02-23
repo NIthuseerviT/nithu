@@ -8,6 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{
     margin:0;
@@ -258,7 +260,7 @@ footer{
 <!-- HERO -->
 <section id="home">
 <div class="hero">
-<img src="" alt="Profile">
+<img src="Nithu.jpeg" alt="Profile">
 <div class="hero-text">
 <h1>Nithu Seervi T</h1>
 <p>Creative Developer ✨ | Dreamer 💖 | Tech Enthusiast</p>
@@ -271,7 +273,7 @@ footer{
 <h2>About Me</h2>
 <div class="about">
 <p>
-    Good morning, my name is Nithu Seervi. I am a motivated and enthusiastic individual with a strong willingness to learn and grow professionally.
+My name is Nithu Seervi. I am a motivated and enthusiastic individual with a strong willingness to learn and grow professionally.
 I have a good academic background and basic knowledge of web development, including HTML.
 I am confident, adaptable, and comfortable working both independently and in a team environment.
 I enjoy taking on new challenges and continuously improving my skills.
@@ -304,18 +306,18 @@ Thank you for giving me the opportunity to introduce myself.
 
 <div class="cert-grid">
 <div class="cert" onclick="openPopup(this)">
-<img src="https://via.placeholder.com/500x300.png?text=AWS+Certificate" alt="">
+<img src="AWS.png" alt="">
 <p>AWS Certificate</p>
 </div>
 
 <div class="cert" onclick="openPopup(this)">
-<img src="https://via.placeholder.com/500x300.png?text=Web+Development" alt="">
-<p>Web Development</p>
+<img src="CSS3.png" alt="">
+<p>CSS3</p>
 </div>
 
 <div class="cert" onclick="openPopup(this)">
-<img src="https://via.placeholder.com/500x300.png?text=JavaScript+Certificate" alt="">
-<p>JavaScript Certificate</p>
+<img src="Digital Engineering.png" alt="">
+<p>Digital Engineering</p>
 </div>
 </div>
 </section>
@@ -329,21 +331,65 @@ Thank you for giving me the opportunity to introduce myself.
 <section id="contact">
 <h2>Get In Touch</h2>
 <div class="contact-icons">
-<a href="#"><i class="fab fa-github"></i></a>
+<a href="#"><i class="https://github.com/NIthuseerviT"></i></a>
 <a href="#"><i class="fab fa-linkedin"></i></a>
-<a href="mailto:example@gmail.com"><i class="fas fa-envelope"></i></a>
+<a href="25bcla42@kristujayanti.com"><i class="fas fa-envelope"></i></a>
 </div>
 </section>
 
 <!-- FEEDBACK -->
-<section>
-<h2>Feedback</h2>
-<div class="feedback">
-<input type="text" placeholder="Your Name">
-<textarea rows="5" placeholder="Your Feedback"></textarea>
-<button>Send Feedback</button>
+<section id="feedback">
+<div class="container card">
+<h2 class="section-title">Feedback</h2>
+
+<form class="feedback-form" id="feedbackForm">
+<input type="text" id="name" placeholder="Your Name" required>
+<input type="email" id="email" placeholder="Your Email" required>
+<textarea rows="4" id="message" placeholder="Your Feedback" required></textarea>
+<button type="submit">Submit Feedback</button>
+</form>
+
+<div class="feedback-status" id="status"></div>
 </div>
 </section>
+
+<footer style="text-align:center;padding:20px;color:var(--muted)">
+</footer>
+
+<script>
+/* 🔗 SUPABASE CONFIG */
+const supabaseUrl = "https://wvhzpiiotjyfikeuyveq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2aHpwaWlvdGp5ZmlrZXV5dmVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE4MzIwODcsImV4cCI6MjA4NzQwODA4N30.PXyAEIbSmXJ9cDeQiu6xuow5CLU6Xu1OUFcwA-els6E";
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+/* 📨 FEEDBACK SUBMIT */
+document.getElementById("feedbackForm").addEventListener("submit", async (e) => {
+e.preventDefault();
+
+const status = document.getElementById("status");
+status.innerText = "Submitting...";
+
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const message = document.getElementById("message").value;
+
+const { error } = await supabaseClient
+.from("feedbacks")
+.insert([{ name, email, message }]);
+
+if (error) {
+status.innerText = "❌ Error submitting feedback";
+status.style.color = "red";
+} else {
+status.innerText = "✅ Feedback submitted successfully!";
+status.style.color = "#00d4ff";
+e.target.reset();
+}});
+</script>
+
+</body>
+</html>
 
 <footer>
 © 2026 Nithu Seervi T | Portfolio
@@ -379,5 +425,5 @@ for(let i=0;i<25;i++){
 </script>
 
 </body>
-
 </html>
+
