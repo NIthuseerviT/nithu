@@ -314,10 +314,7 @@ Apart from academics, I am an extrovert who enjoys meeting new people and workin
 </div>
 </section>
 
-<section id="feedback">
-<div class="container card">
-
-<h2 class="section-title">Feedback</h2>
+<h2>Feedback</h2>
 
 <form class="feedback-form" id="feedbackForm">
 
@@ -333,39 +330,71 @@ Apart from academics, I am an extrovert who enjoys meeting new people and workin
 
 <div id="status"></div>
 
-</div>
 </section>
 
-<footer style="text-align:center;padding:20px;color:var(--muted)">
+<footer>
+© 2026 Nithu Seervi Portfolio
 </footer>
 
 <script>
-window.addEventListener("scroll",()=>{
-document.querySelectorAll(".fill").forEach(b=>{
-if(b.getBoundingClientRect().top < innerHeight-120)
-b.style.width=b.getAttribute("data")+"%";
-});
-});
+
+/* POPUP */
+
+function openPopup(el){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popup-img").src=el.querySelector("img").src;
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+/* BUBBLES */
+
+const bg=document.getElementById("bg");
+
+for(let i=0;i<30;i++){
+
+let b=document.createElement("div");
+
+b.className="bubble";
+
+let s=Math.random()*60+20;
+
+b.style.width=s+"px";
+b.style.height=s+"px";
+b.style.left=Math.random()*100+"%";
+b.style.animationDuration=(Math.random()*10+8)+"s";
+
+bg.appendChild(b);
+
+}
+
 </script>
 
 
-<!-- FIREBASE BACKEND -->
+<!-- FIREBASE -->
 
 <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAIgGLj_RgUT-qosCHdRkWtpiKp2Dl88Gc",
-    authDomain: "nithu-portfolio-cba83.firebaseapp.com",
-    projectId: "nithu-portfolio-cba83",
-    storageBucket: "nithu-portfolio-cba83.firebasestorage.app",
-    messagingSenderId: "796478951787",
-    appId: "1:796478951787:web:43a818499784b6f184bc2e"
-  };
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+
+import { 
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAIgGLj_RgUT-qosCHdRkWtpiKp2Dl88Gc",
+authDomain: "nithu-portfolio-cba83.firebaseapp.com",
+projectId: "nithu-portfolio-cba83",
+storageBucket: "nithu-portfolio-cba83.firebasestorage.app",
+messagingSenderId: "796478951787",
+appId: "1:796478951787:web:43a818499784b6f184bc2e"
+
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -384,10 +413,12 @@ status.innerText="Submitting...";
 try{
 
 await addDoc(collection(db,"feedbacks"),{
+
 name:name,
 email:email,
 message:message,
 date:new Date()
+
 });
 
 status.innerText="✅ Feedback submitted!";
@@ -404,27 +435,6 @@ console.error(err);
 
 });
 
-/* POPUP */
-function openPopup(el){
-document.getElementById("popup").style.display="flex";
-document.getElementById("popup-img").src=el.querySelector("img").src;
-}
-function closePopup(){
-document.getElementById("popup").style.display="none";
-}
-
-/* BUBBLES */
-const bg=document.getElementById("bg");
-for(let i=0;i<30;i++){
-let b=document.createElement("div");
-b.className="bubble";
-let s=Math.random()*60+20;
-b.style.width=s+"px";
-b.style.height=s+"px";
-b.style.left=Math.random()*100+"%";
-b.style.animationDuration=(Math.random()*10+8)+"s";
-bg.appendChild(b);
-}
 </script>
 
 </body>
